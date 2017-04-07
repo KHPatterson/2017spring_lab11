@@ -164,7 +164,10 @@ T** BinarySearchTree<T>::toArray()
 	//is called in the treeSort
 	//call the in order traversal from the iterator
 	//put the results in an array
+	//delete bst
 	//return array
+	
+	
 
 
 }
@@ -175,7 +178,16 @@ T** BinarySearchTree<T>::treeSort(T** items, int num_itemss, int (*comp_items) (
    //DO THIS
 	//insert the entire array into a BST
 	// call toArray
-
+	
+	BinarySearchTree<T>* sortMe = new BinarySearchTree(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item)); 
+	
+	for (int i = 0; i < num_itemss; i++)//eject the items in the array and throw them into the bst
+	{
+		sortMe->insert(items[i]);
+	}
+	
+	return sortMe->toArray();
+	
 }
 
 template < class T >
