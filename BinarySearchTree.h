@@ -97,37 +97,45 @@ TreeNode<T>* BinarySearchTree<T>::removeNode(TreeNode<T>* tNode)
       delete tNode;
       return temp;
    }
-   else 
+   else //two children so more fun for us 
    {
       //DO THIS
-
-
-
-
-
+		T* item = findLeftMost(tNode->getRight()); //gets the inorder successor
+		tNode->setItem(item); //makes successor the new node
+		tNode->setRight(removeLeftMost(tNode->getRight())); //removes the successor and adjusts the subtree
+															//returns the new subtree and we put it in the Right
+		return tNode; 
    }
 }
 
 template < class T >
-T* BinarySearchTree<T>::findLeftMost(TreeNode<T>* tNode)
+T* BinarySearchTree<T>::findLeftMost(TreeNode<T>* tNode) //when calling give the the RN of the node to get the in order successor
 {
    //DO THIS (use a while loop)
-
-
-
-
-
+	while ( tNode->getLeft() != NULL)
+		{ tNode = tNode->getLeft();}
+	return tNode->getItem();
 }
 
 template < class T >
-TreeNode<T>* BinarySearchTree<T>::removeLeftMost(TreeNode<T>* tNode)
+TreeNode<T>* BinarySearchTree<T>::removeLeftMost(TreeNode<T>* tNode) //returns a subtree, NOT the node we removed
 {
    //DO THIS (recursion)
-
-
-
-
-
+	TreeNode<T>* subtree;
+	
+	if(tNode->getLeft() != NULL ) // base case, recurses upwards after this
+	{
+		subtree = tNode->getRight();
+		delete tNode;
+		return subtree;
+	}
+	else
+	{
+		subtree = removeLeftMost(tNode->getLeft());
+		tNode->setLeft(subtree);
+		return tNode; 
+	}
+	
 }
 
 template < class T >
