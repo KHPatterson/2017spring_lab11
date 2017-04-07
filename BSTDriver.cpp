@@ -7,10 +7,12 @@
 
 #include "Circle.h"
 #include "Line.h"
-#include "AVLTree.h"
+//#include "AVLTree.h"
 #include "ListArray.h"
 #include "CD.h"
+#include "BinarySearchTree.h"
 using namespace CSC2110;
+using namespace std;
 
 class MyApp: public wxApp
 {
