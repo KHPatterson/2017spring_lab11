@@ -161,7 +161,10 @@ template < class T >
 T** BinarySearchTree<T>::toArray()
 {
    //DO THIS
-
+	//is called in the treeSort
+	//call the in order traversal from the iterator
+	//put the results in an array
+	//return array
 
 
 }
@@ -170,8 +173,8 @@ template < class T >
 T** BinarySearchTree<T>::treeSort(T** items, int num_itemss, int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item))
 {
    //DO THIS
-
-
+	//insert the entire array into a BST
+	// call toArray
 
 }
 
