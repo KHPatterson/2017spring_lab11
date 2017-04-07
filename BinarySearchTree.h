@@ -72,7 +72,7 @@ TreeNode<T>* BinarySearchTree<T>::removeItem(TreeNode<T>* tNode, String* sk)
    //DO THIS
 	TreeNode<T>* subtree;
 	T* item = tNode->getItem();
-	int compare = (*compare_key) ( sk, item );
+	int compare = (*compare_keys) ( sk, item );
    
 	if(tNode == NULL) //the item doesn't exist, return tNode.
 	{
