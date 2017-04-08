@@ -132,7 +132,7 @@ template < class T >
 T* BinarySearchTree<T>::findLeftMost(TreeNode<T>* tNode) //when calling give the the RN of the node to get the in order successor
 {
    //DO THIS (use a while loop)
-	while ( tNode->getLeft() != NULL)
+	while ( tNode->getLeft())
 		{ tNode = tNode->getLeft();}
 	return tNode->getItem();
 }
@@ -143,7 +143,7 @@ TreeNode<T>* BinarySearchTree<T>::removeLeftMost(TreeNode<T>* tNode) //returns a
    //DO THIS (recursion)
 	TreeNode<T>* subtree;
 	
-	if(tNode->getLeft() != NULL ) // base case, recurses upwards after this
+	if(tNode->getLeft() == NULL ) // base case, recurses upwards after this
 	{
 		subtree = tNode->getRight();
 		delete tNode;
@@ -161,15 +161,18 @@ template < class T >
 T** BinarySearchTree<T>::toArray()
 {
    //DO THIS
-	//is called in the treeSort
-	//call the in order traversal from the iterator
-	//put the results in an array
-	//delete bst
-	//return array
-	
-	
+      T** array = new T*[sze];
+      int i = 0;
 
+      BinaryTreeIterator<T>* iter = iterator();
 
+      iter->setInorder();
+
+      while(iter->hasNext())
+      {array[i] = iter->next();}
+
+      delete iter;
+      return array;
 }
 
 template < class T >
