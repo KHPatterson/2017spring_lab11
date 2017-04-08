@@ -182,7 +182,7 @@ T** BinarySearchTree<T>::treeSort(T** items, int num_itemss, int (*comp_items) (
 	//insert the entire array into a BST
 	// call toArray
 	
-	BinarySearchTree<T>* sortMe = new BinarySearchTree(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item)); 
+	BinarySearchTree<T>* sortMe = new BinarySearchTree(comp_items, comp_keys); 
 	
 	for (int i = 0; i < num_itemss; i++)//eject the items in the array and throw them into the bst
 	{
