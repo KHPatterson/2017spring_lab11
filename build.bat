@@ -1,4 +1,5 @@
 @echo off
+del *.o
 cls
 
 ::Set drive letter if no args given

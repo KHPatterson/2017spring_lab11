@@ -53,7 +53,7 @@ class BinarySearchTree : public Drawable
       bool isBalanced();
 
       T** toArray();
-      static T** treeSort(T** items, int num_itemss, int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
+      static T** treeSort(T** items, int num_items, int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
 
       void draw(wxDC& dc, int width, int height);
       void mouseClicked(int x, int y);
@@ -63,38 +63,47 @@ template < class T >
 void BinarySearchTree<T>::remove(String* sk)
 {
    //DO THIS
-	root = removeItem(root, sk);
+
+   root = removeItem(root, sk);
+
 }
 
 template < class T >
 TreeNode<T>* BinarySearchTree<T>::removeItem(TreeNode<T>* tNode, String* sk)
 {
    //DO THIS
-	TreeNode<T>* subtree;
-	T* item = tNode->getItem();
-	int compare = (*compare_keys) ( sk, item );
-   
-	if(tNode == NULL) //the item doesn't exist, return tNode.
-	{
-		return tNode;
-	}
-	else if( compare == 0 ) // item is root of the subtree
-	{
-		removeNode(tNode);
-		sze--;
-	}
-	else if( compare < 0 ) //current node is less than what's being removed
-	{
-		subtree = removeItem( tNode->getLeft(), sk );
-		tNode->setLeft( subtree );
-	}
-	else // current node is greater than what's being removed
-	{
-		subtree = removeItem( tNode->getRight(), sk );
-		tNode->setRight( subtree );
-	}
 	
-	return tNode;
+   if(tNode == NULL)
+   {
+      return NULL;
+   }
+
+   T* item = tNode->getItem();
+   TreeNode<T>* temp;
+
+   int comp_res = (*compare_keys)(sk, item);
+
+   if(comp_res < 0)
+   {
+      temp = removeItem( tNode->getLeft() , sk);
+      tNode->setLeft(temp);
+
+      return tNode;
+   }
+
+   else if(comp_res > 0)
+   {
+      temp = removeItem( tNode->getRight() , sk);
+      tNode->setRight(temp);
+
+      return tNode;
+   }
+
+   else
+   {
+      sze--;
+      return removeNode(tNode);
+   }
 }
 
 template < class T >
@@ -121,7 +130,9 @@ TreeNode<T>* BinarySearchTree<T>::removeNode(TreeNode<T>* tNode)
    {
       //DO THIS
 		T* item = findLeftMost(tNode->getRight()); //gets the inorder successor
+
 		tNode->setItem(item); //makes successor the new node
+
 		tNode->setRight(removeLeftMost(tNode->getRight())); //removes the successor and adjusts the subtree
 															//returns the new subtree and we put it in the Right
 		return tNode; 
@@ -134,6 +145,7 @@ T* BinarySearchTree<T>::findLeftMost(TreeNode<T>* tNode) //when calling give the
    //DO THIS (use a while loop)
 	while ( tNode->getLeft())
 		{ tNode = tNode->getLeft();}
+
 	return tNode->getItem();
 }
 
@@ -146,7 +158,7 @@ TreeNode<T>* BinarySearchTree<T>::removeLeftMost(TreeNode<T>* tNode) //returns a
 	if(tNode->getLeft() == NULL ) // base case, recurses upwards after this
 	{
 		subtree = tNode->getRight();
-		delete tNode;
+		removeNode(tNode);
 		return subtree;
 	}
 	else
@@ -162,6 +174,7 @@ T** BinarySearchTree<T>::toArray()
 {
    //DO THIS
       T** array = new T*[sze];
+
       int i = 0;
 
       BinaryTreeIterator<T>* iter = iterator();
@@ -169,14 +182,17 @@ T** BinarySearchTree<T>::toArray()
       iter->setInorder();
 
       while(iter->hasNext())
-      {array[i] = iter->next();}
+      {
+         array[i] = iter->next();
+         i++;
+      }
 
       delete iter;
       return array;
 }
 
 template < class T >
-T** BinarySearchTree<T>::treeSort(T** items, int num_itemss, int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item))
+T** BinarySearchTree<T>::treeSort(T** items, int num_items, int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item))
 {
    //DO THIS
 	//insert the entire array into a BST
@@ -184,13 +200,15 @@ T** BinarySearchTree<T>::treeSort(T** items, int num_itemss, int (*comp_items) (
 	
 	BinarySearchTree<T>* sortMe = new BinarySearchTree(comp_items, comp_keys); 
 	
-	for (int i = 0; i < num_itemss; i++)//eject the items in the array and throw them into the bst
+	for (int i = 0; i < num_items; i++)//eject the items in the array and throw them into the bst
 	{
 		sortMe->insert(items[i]);
 	}
 	
-	return sortMe->toArray();
-	
+   T** ary = sortMe->toArray();
+   delete sortMe;
+
+   return ary;	
 }
 
 template < class T >
